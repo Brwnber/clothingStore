@@ -1,17 +1,17 @@
-var tax = 15.00
-
+var taxRate = 0.05
+var shippingRate = 15.00
 var myShoppingCart = [];
 
 var item1 = {
     name: "leather jacket",
-    price: 20,
+    price: 20.00,
     quantity: 1
 
 };
 
 var item2 = {
     name: "parka jacket",
-    price: 30,
+    price: 30.00,
     quantity: 1
 };
 
