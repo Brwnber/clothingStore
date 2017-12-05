@@ -105,9 +105,7 @@ function loadCart() {
 loadCart();
 displayCart();
 
-//JQUERY 
-
-//this will be used to add the items into our cart. There are current placeholders in the selectors
+//JQUERY
 
 $(".class").click(function(event){ //<---this is adding cart
     event.preventDefault();
@@ -126,15 +124,15 @@ $(".cartlistsdiv").on("click",".deleteitem", function(){ //<---this is our remov
     displayCart();
 });
 
-$(".cartlistdiv").on("click",".subtractitem", function(){
-    let name = $(this).attr("name");
-    removeFromCart(itemName);
+$("#b2").on("click",function(){
+    let name = $("p2").text();
+    removeFromCart(name);
     displayCart();
 });
-
-$(".cartlistdiv").on("click",".additem", function(){
-    let name = $(this).attr("name");
-    addToCart(itemName);
+  //v---replace this with the class/id of the button
+$("#b1").on("click",function(){
+    let name = $("p1").text();
+    addToCart(name);//^--replace that selector with class/id of the paragraph
     displayCart();
 })
 
