@@ -76,9 +76,9 @@ function countCart() {
 function totalCart() {
     let totalCost = 0;
     for (let i in myShoppingCart) {
-        totalCost += myShoppingCart[i].price;
+        totalCost += myShoppingCart[i].price * myShoppingCart[i].quantity;
     }
-    return totalCost;
+    return totalCost.toFixed(2);
 }
 
 function listCart(){
@@ -103,3 +103,52 @@ function loadCart() {
 }
 
 loadCart();
+displayCart();
+
+//JQUERY 
+
+//this will be used to add the items into our cart. There are current placeholders in the selectors
+
+$(".class").click(function(event){ //<---this is adding cart
+    event.preventDefault();
+    let name = $(this).attr("name"); //<---replace these selectors with classes/ids provided by the html
+    let price = Number($(this).attr("price"));
+
+    addToCart(itemName);
+    displayCart();
+});
+
+        //v--replace this with the parent of the remove button
+$(".cartlistsdiv").on("click",".deleteitem", function(){ //<---this is our removeall function
+    let name = $(this).attr("name");//^--replace this with class/id of remove button
+
+    removeFromCartAll(itemName);
+    displayCart();
+});
+
+$(".cartlistdiv").on("click",".subtractitem", function(){
+    let name = $(this).attr("name");
+    removeFromCart(itemName);
+    displayCart();
+});
+
+$(".cartlistdiv").on("click",".additem", function(){
+    let name = $(this).attr("name");
+    addToCart(itemName);
+    displayCart();
+})
+
+$("clearCart").click(function(){ //<---This is clear cart
+    clearCart();
+    displayCart();
+});
+
+function displayCart() {
+    let cartArray = listCart();
+    let output = "";
+    for (let i in cartArray) {
+        output += "<li>"+cartArray[i].name+" "+cartArray[i].quantity+"</li>"
+    }
+    $("#cart").innerHTML(output);
+    $("#totalcart").innerHTML(totalCart());
+}
