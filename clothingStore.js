@@ -70,7 +70,7 @@ function removeFromCart(name){
 
 function removeFromCartAll(itemName){
     for (let i in myShoppingCart) {
-        if (myShoppingCart[i].name === itemName) {
+        if (myShoppingCart[i].name === name) {
             cart.splice(i, 1);
             break;
         }
@@ -86,7 +86,7 @@ function clearCart() {
 function countCart() {
     let totalCount = 0;
     for (let i in myShoppingCart) {
-        totalcount += myShoppingCart[i].quantity;
+        totalcount += myShoppingCart[i].count;
     }
     return totalCount;
 }
@@ -94,7 +94,7 @@ function countCart() {
 function totalCart() {
     let totalCost = 0;
     for (let i in myShoppingCart) {
-        totalCost += myShoppingCart[i].price * myShoppingCart[i].quantity;
+        totalCost += myShoppingCart[i].price * myShoppingCart[i].count;
     }
     return totalCost.toFixed(2);
 }
@@ -123,7 +123,7 @@ function loadCart() {
 loadCart();
 displayCart();
 
-//JQUERY
+/*JQUERY
 
 $(".add-to-cart").click(function(event){ //<---this is adding cart
     event.preventDefault();
@@ -168,3 +168,5 @@ function displayCart() {
     $("#show-cart").html(output)
     $("#totalcart").html(totalCart());
 }
+
+*/

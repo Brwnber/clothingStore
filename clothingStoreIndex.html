@@ -12,8 +12,8 @@
 		<link href="themes/css/main.css" rel="stylesheet"/>
 
 		<!-- scripts -->
-		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="clothingStore.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="shoppingCart.js"></script>
 	</head>
     <body>		
 		<div id="top-bar" class="container">
@@ -54,63 +54,48 @@
 									<th>Image</th>
 									<th>Product Image</th>
 									<th>Product Name</th>
-									<th>Quantity</th>
 									<th>Unit Price</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td><button class="rmvbtn">Remove</button></td>
+									<td><button><a class="add-to-cart" href="#" data-name="Gingerbread Sweater" data-price="74.99">Add To Cart</a></button></td>										
 									<td><img src="https://cdnb.lystit.com/photos/c411-2015/10/29/asos-charcoal-christmas-jumper-with-gingerbread-men-in-wool-mix-gray-product-0-870521078-normal.jpeg" alt="sweater" height="100px" width="80px"></a></td>
-									<td><a class="add-to-cart" href="#" data-name="Sweater" data-price="75">Gingerbread Sweater</a></td>
-									<td><input type="text" placeholder="1" class="input-mini"></td>
+									<td><p>Gingerbread sweater</p></td>
+									
 									<td>$75.00</td>
 								</tr>			  
 								<tr>
-									<td><button class="rmvbtn">Remove</button></td>
+									<td><button><a class="add-to-cart" href="#" data-name="Biker Jacket" data-price="149.99">Add To Cart</a></button></td>
 									<td><img src="https://www.thefashionisto.com/wp-content/uploads/2016/01/ASOS-Leather-Jacket-Suede-Fringe-Detailing-001-800x1021.jpg" alt="jacket" height="100px" width="80px"></a></td>
-									<td><a class="add-to-cart" href="#" data-name="Jacket" data-price="150">Biker Jacket</a></td>
-									<td><input type="text" placeholder="2" class="input-mini"></td>
+									<td><p>Biker Jacket</p></td>
 									<td>$150.00</td>
 								</tr>
 								<tr>
-									<td><button class="rmvbtn">Remove</button></td>
+									<td><button><a class="add-to-cart" href="#" data-name="Maroon Suite" data-price="199.99">Add To Cart</a></button></td>										
 									<td><img src="https://images.express.com/is/image/expressfashion/39_526_1527_894_f01?cache=on&wid=640&fmt=jpeg&qlt=70,1&resmode=sharp2&op_usm=1,1,5,0&fit=fit,1" alt="Suite" height="100px" width="80px"></a></td>
-									<td><a class="add-to-cart" href="#" data-name="Suite" data-price="200">Maroon Suite</a></td>
-									<td><input type="text" placeholder="1" class="input-mini"></td>
+									<td><p>Maroon Suite</p></td>
 									<td>$200.00</td>
 								</tr>
 								<tr>
-									<td><button class="rmvbtn">Remove</button></td>
+										<td><button><a class="add-to-cart" href="#" data-name="Black Parka" data-price="174.99">Add To Cart</a></button></td>
 									<td><img src="https://cdnd.lystit.com/photos/6424-2016/03/09/asos-black-duster-coat-in-black-product-3-858581842-normal.jpeg" alt="parka" height="100px" width="80px"></a></td>
-									<td><a class="add-to-cart" href="#" data-name="Parka" data-price="175">Black Parka</a></td>
-									<td><input type="text" placeholder="1" class="input-mini"></td>
+									<td><p>Black Parka</p></td>
 									<td>$175.00</td>
-								</tr>
-								<button id="clear-cart">Clear Cart</button>
-								<tr>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td><strong></strong></td>
 								</tr>		  
 							</tbody>
 						</table>
 						<hr>
-								<ul id="show-cart">
-										<li>???????</li>
-									</ul>
-									<div>You have <span id="count-cart">X</span> items in your cart</div>
-									<div>Total Cart:$<span id="total-cart"></span></div>
-						</p>
-						<hr/>
-						<p class="buttons center">				
-							<button class="btn" type="button">Update</button>
-							<button class="btn" type="button">Continue</button>
-							<button class="btn btn-inverse" type="submit" id="checkout">Checkout</button>
-						</p>					
+						<h2>Total Cart</h2>
+					</div>
+					<div>
+						<ul id="show-cart"></ul>
+						<div id="p1">You have <span id="count-cart">X</span> items in your cart</div>
+						<div id="p1">Total Cart:$<span id="total-cart"></span></div>
+					</div>
+				
+					<button id="clear-cart">Clear Cart</button>
+					<button id="checkout">CheckOut</button>					
 					</div>
 				</div>
 			</section>			
@@ -140,13 +125,78 @@
 					</div>					
 				</div>	
 			</section>
-			<section id="copyright">
-				<span>Copyright 2013 bootstrappage template  All right reserved.</span>
-			</section>
 		</div>
-		<script>
-			
 
+		<script>
+			$(".add-to-cart").click(function(event) {
+            event.preventDefault();
+            var name = $(this).attr("data-name");
+            var price = Number($(this).attr("data-price"));
+
+            shoppingCart.addItemToCart(name, price, 1);
+            displayCart();
+        });
+
+        $("#clear-cart").click(function(event) {
+            shoppingCart.clearCart();
+            displayCart();
+        });
+
+        function displayCart() {
+            var cartArray = shoppingCart.listCart();
+            console.log(cartArray);
+            var output = "";
+
+            for (var i in cartArray) {
+                output += "<li>" +
+                    cartArray[i].name +
+                    " <input class='item-count' type='number' data-name='" +
+                    cartArray[i].name +
+                    "' value='" + cartArray[i].count + "' >" +
+                    " x " + cartArray[i].price +
+                    " = " + cartArray[i].total +
+                    " <button class='plus-item' data-name='" +
+                    cartArray[i].name + "'>+</button>" +
+                    " <button class='subtract-item' data-name='" +
+                    cartArray[i].name + "'>-</button>" +
+                    " <button class='delete-item' data-name='" +
+                    cartArray[i].name + "'>Remove</button>" +
+                    "</li>";
+            }
+
+            $("#show-cart").html(output);
+            $("#count-cart").html(shoppingCart.countCart());
+            $("#total-cart").html(shoppingCart.totalCart());
+        }
+
+        $("#show-cart").on("click", ".delete-item", function(event) {
+            var name = $(this).attr("data-name");
+            shoppingCart.removeItemFromCartAll(name);
+            displayCart();
+        });
+
+        $("#show-cart").on("click", ".subtract-item", function(event) {
+            var name = $(this).attr("data-name");
+            shoppingCart.removeItemFromCart(name);
+            displayCart();
+        });
+
+        $("#show-cart").on("click", ".plus-item", function(event) {
+            var name = $(this).attr("data-name");
+            shoppingCart.addItemToCart(name, 0, 1);
+            displayCart();
+        });
+
+        $("#show-cart").on("change", ".item-count", function(event) {
+            var name = $(this).attr("data-name");
+            var count = Number($(this).val());
+            shoppingCart.setCountForItem(name, count);
+            displayCart();
+        });
+
+
+		displayCart();
+		
 		</script>		
     </body>
 </html>
