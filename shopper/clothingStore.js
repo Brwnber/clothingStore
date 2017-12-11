@@ -17,6 +17,7 @@ var item2 = {
 
 var inventory = [item1, item2];
 
+/* Trying out new code
 function addToCart(itemName){
     let itemFound = false;
     for (let i = 0; i < myShoppingCart.length;i++){
@@ -35,13 +36,30 @@ function addToCart(itemName){
         }
     }
     saveCart();
+}*/
+
+var Item = function(name, price, count) {
+    this.name = name
+    this.price = price
+    this.count = count
 }
 
-function removeFromCart(itemName){
+function addItemToCart(name, price, count) {
+    for (var i in myShoppingCart) {
+        if (myShoppingCart[i].name === name) {
+            myShoppingCart[i].count += count;
+            return
+        }
+    }
+    var item = new item(name, price, count);
+    myShoppingCart.push(item);
+}
+
+function removeFromCart(name){
     for (let i in myShoppingCart) {
-        if(myShoppingCart[i].name === itemName){
-            myShoppingCart[i].quantity--;
-            if(myShoppingCart[i].quantity === 0) {
+        if(myShoppingCart[i].name === name){
+            myShoppingCart[i].count --;
+            if(myShoppingCart[i].count === 0) {
                 myShoppingCart.splice(i, 1);
             }
             break;
@@ -112,7 +130,7 @@ $(".add-to-cart").click(function(event){ //<---this is adding cart
     let name = $(this).attr("data-name"); //<---replace these selectors with classes/ids provided by the html
     let price = Number($(this).attr("data-price"));
 
-    addToCart(itemName);
+    addItemToCart(name, price, 1);
     displayCart();
 });
 
@@ -145,8 +163,8 @@ function displayCart() {
     let cartArray = listCart();
     let output = "";
     for (let i in cartArray) {
-        output += "<li>"+cartArray[i].name+" "+cartArray[i].quantity+"</li>"
+        output += "<li>"+cartArray[i].name+" "+cartArray[i].count+"</li>"
     }
-    $("#cart").innerHTML(output);
-    $("#totalcart").innerHTML(totalCart());
+    $("#show-cart").html(output)
+    $("#totalcart").html(totalCart());
 }
